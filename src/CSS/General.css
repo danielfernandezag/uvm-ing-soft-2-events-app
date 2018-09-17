@@ -1,3 +1,11 @@
+
+
+html, body {
+	margin: 0;
+	height: 100%;
+}
+
+
 #Login {
 	margin-top: 240px;
 }
@@ -37,6 +45,14 @@
   border-radius: 0px  
 }
 
+.navbar-inverse .navbar-nav>li>a {
+	color: #ffffff;
+}
+
+.navbar-inverse .navbar-brand {
+	color: #ffffff;
+}
+
 .nav-bar-item:hover{
   color: white;
   border-color: white;
@@ -68,7 +84,7 @@
 	width: 100%;
 	text-align: left;
 	font: bold 16px sans-serif;
-
+	;
 	padding: 55px 50px;
 	margin-top: 80px;
 }
@@ -207,13 +223,20 @@
 	margin-bottom: 5px;
 }
 
+.footer-icons {
+	padding: 10px;
+}
 
+.footer-icons-item {
+	margin: 10px;
+}
 /* If you don't want the footer to be responsive, remove these media queries */
 
 @media (max-width: 880px) {
 
 	.footer-distributed{
 		font: bold 14px sans-serif;
+		bottom: 0;
 	}
 
 	.footer-distributed .footer-left,
@@ -230,6 +253,8 @@
 	}
 
 }
+
+
 
 
 
