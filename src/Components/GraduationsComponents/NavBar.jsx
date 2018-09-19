@@ -24,7 +24,6 @@ export default class NavBar extends Component {
               Contacto
             </NavItem>
             <NavDropdown className="nav-bar-item" eventKey={4} title="Cuenta" id="basic-nav-dropdown">
-              <MenuItem className="nav-bar-general-dropdowns" eventKey={4.1}>Cambiar contraseña</MenuItem> {/*pendiente */}
               <MenuItem className="nav-bar-general-dropdowns" eventKey={4.2}>Detalles de reservacion</MenuItem> {/*pendiente */}
               <MenuItem divider />
               <MenuItem onClick={this.props.logout} className="nav-bar-general-dropdowns" eventKey={4.3}>Cerrar sesión</MenuItem>

@@ -12,6 +12,7 @@ export default class Login extends Component {
       loginAttempts: 0,
       loginError: false,
       loginBlocked: false,
+      interacted: false,
     }
   }
   componentWillMount() {
@@ -26,6 +27,7 @@ export default class Login extends Component {
 
   submitLogin = (e) => {
     e.preventDefault();
+    this.setState({ interacted: false });
     const userIndex = this.state.users.findIndex((user) => user.account === this.state.account);
     console.log(userIndex);
     const currentLoginData = this.state.users[userIndex];
@@ -48,7 +50,7 @@ export default class Login extends Component {
   };
 
   getValidationStateAccount = () => /^[0-9]{9,10}$/.test(this.state.account) === true ? "success" : (this.state.account.length === 0 ? null : "error");
-  handleChangeAccount = (e) => this.setState({ account: e.target.value });
+  handleChangeAccount = (e) => this.setState({ account: e.target.value, interacted: true });
   handleChangePassword = (e) => this.setState({ password: e.target.value });
 
 
@@ -61,7 +63,7 @@ export default class Login extends Component {
             <form onSubmit={this.submitLogin}>
               <FormGroup controlId="formAccount" validationState={this.getValidationStateAccount()}>
                 <label> Numero de Cuenta &ensp;</label>
-                {this.getValidationStateAccount() === "success" ? <ControlLabel> numero de cuenta valido </ControlLabel> : <ControlLabel> numero de cuenta invalido </ControlLabel>}
+                { this.state.interacted ? this.getValidationStateAccount() === "success" ? <ControlLabel> numero de cuenta valido </ControlLabel> : <ControlLabel> numero de cuenta invalido </ControlLabel> : ""}
                 <FormControl type="text" value={this.state.account} placeholder="ingresa tu numero de cuenta" onChange={this.handleChangeAccount} required />
                 <FormControl.Feedback />
               </FormGroup>
