@@ -13,7 +13,6 @@
     "react-scripts": "1.1.5",
     "redux": "^4.0.0"
   },
-<<<<<<< HEAD
   "prettier": {
 		"printWidth": 200,
 		"tabWidth": 2,
@@ -26,8 +25,6 @@
 		"arrowParens": "avoid",
 		"proseWrap": "always"
 	},
-=======
->>>>>>> 4c4cee02b5efc95c9d216347b80476cf8490f2d2
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
