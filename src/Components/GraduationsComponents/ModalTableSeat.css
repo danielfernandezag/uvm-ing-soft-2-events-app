@@ -1,0 +1,29 @@
+.seat-free {
+  background-color: rgb(183, 255, 168);
+  font-family: 'Muli', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+.seat-reserved {
+  background-color: rgb(247, 114, 114);
+  color: white;
+  font-family: 'Muli', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+.select-button {
+  border-radius: 5px;
+  border: solid 2px rgba(255, 255, 255, 0.9);
+  background-color: white;
+}
+.select-button:hover {
+  background-color: rgb(201, 201, 201);
+  border: solid 2px royalblue;
+}
+.cancel-button {
+  color: black;
+}
+.seat-free:hover {
+  background-color: rgb(131, 182, 119);
+  background: rgb(131, 182, 119);
+}
+.seat-reserved:hover {
+  background-color: rgb(192, 88, 88);
+  background: rgb(192, 88, 88);
+}

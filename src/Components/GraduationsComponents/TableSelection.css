@@ -1,0 +1,24 @@
+.table-free {
+  background-color: rgb(183, 255, 168);
+  background: rgb(183, 255, 168);
+  font-weight: bold;
+  font-family: 'Muli', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+.table-full {
+  background-color: rgb(247, 114, 114);
+  background: rgb(247, 114, 114);
+  color: white;
+  font-family: 'Muli', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+.table-free:hover, .table-free:focus {
+  background-color: rgb(131, 182, 119);
+  background: rgb(131, 182, 119);
+}
+.table-full:hover, .table-full:focus {
+  background-color: rgb(192, 88, 88);
+  background: rgb(192, 88, 88);
+}
+.tableButton.btn-default, .tableButton2.btn-default {
+  text-shadow: none;
+  font-weight: 400;
+}
