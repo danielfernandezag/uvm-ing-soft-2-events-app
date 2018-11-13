@@ -122,7 +122,7 @@ export default class Payments extends Component {
 					<form onSubmit={this.submitPayment}>
 						<FormGroup controlId="frmQuantity">
 							<ControlLabel id="lbl-quantity">{'Cantidad (MXN)'}</ControlLabel>
-							<FormControl type="text" value={this.state.value} placeholder="$0.00 MXN" onChange={this.handleQuantityChange} />
+							<FormControl type="text" value={this.state.value} placeholder="$0.00 MXN" onChange={this.handleQuantityChange} required/>
 						</FormGroup>
 						<FormGroup controlId="frmPaymentMethod">
 							<ControlLabel id="lbl-method">Metodo de pago:</ControlLabel>

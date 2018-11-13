@@ -54,17 +54,17 @@ export default class Checkout extends Component {
 								</div>
 							</div>
 							<FormGroup controlId="frmCard">
-								<FormControl type="number" value={this.state.card} placeholder="tarjeta..." onChange={this.handleCardChange} />
+								<FormControl type="number" value={this.state.card} placeholder="tarjeta..." onChange={this.handleCardChange} required/>
 							</FormGroup>
 							<div className="code-container">
 								<div className="icon-date">
 									<FormGroup controlId="frmDate">
-										<FormControl id="date" type="text" value={this.state.date} placeholder="MM/YY" onChange={this.handleDateChange} />
+										<FormControl id="date" type="text" value={this.state.date} placeholder="MM/YY" onChange={this.handleDateChange} required/>
 									</FormGroup>
 								</div>
 								<div className="icon-code">
 									<FormGroup controlId="frmCode">
-										<input id="code" type="number" value={this.state.code} placeholder="CVC" onChange={this.handleCodeChange} />
+										<FormControl id="code" type="number" value={this.state.code} placeholder="CVC" onChange={this.handleCodeChange} required/>
 									</FormGroup>
 								</div>
 							</div>
