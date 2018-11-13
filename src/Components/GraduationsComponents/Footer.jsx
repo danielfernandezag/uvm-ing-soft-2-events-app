@@ -3,6 +3,7 @@ import logo from '../../Images/FooterLogo.JPG';
 import I1 from '../../Images/facebook.svg';
 import I2 from '../../Images/twitter.svg';
 import I3 from '../../Images/linkedin.svg';
+import '../../CSS/Footer.css';
 
 export default class Footer extends Component {
   render() {

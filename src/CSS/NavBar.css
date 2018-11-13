@@ -1,0 +1,37 @@
+.nav-bar-general{
+  color: white;
+  border-color: white;
+  -webkit-text-fill-color: white;
+  background: red;
+  border-radius: 0px  
+}
+
+.navbar-inverse .navbar-nav>li>a {
+	color: #ffffff;
+}
+
+.navbar-inverse .navbar-brand {
+	color: #ffffff;
+}
+
+.nav-bar-item:hover{
+  color: white;
+  border-color: white;
+  -webkit-text-fill-color: white;
+  background: rgb(189, 2, 2);
+  border-radius: 0px  
+}
+
+.nav-bar-general-dropdowns{
+  color: black;
+  -webkit-text-fill-color : black;
+}
+
+
+
+@media screen and (max-width: 480px) {
+  .nav-bar-general-dropdowns{
+    color: white;
+    -webkit-text-fill-color : white;
+  }
+}

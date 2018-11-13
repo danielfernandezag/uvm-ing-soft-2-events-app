@@ -31,7 +31,9 @@ export default class App extends Component {
 			reservations: [],
 			currentUser: null,
 			isLogged: false,
-			seatsReserved: []
+			seatsReserved: [],
+      username: '',
+      userMail: ''
 		};
 	}
 
@@ -139,9 +141,10 @@ export default class App extends Component {
 	loginHandler = () => this.setState({ isLogged: true });
 	logoutHandler = () => this.setState({ isLogged: false });
 	currentUserHandler = account => this.setState({ currentUser: account });
+	userHandler = (name, mail) => this.setState({ username: name, userMail: mail });
 	seatsReservedHandler = () => {
-    const tables = this.state.tables;
-    const reserved = tables.filter( seat => seat.account === this.state.currentUser);
+		const tables = this.state.tables;
+		const reserved = tables.filter(seat => seat.account === this.state.currentUser);
 		this.setState({ seatsReserved: reserved });
 	};
 
@@ -158,9 +161,11 @@ export default class App extends Component {
 						cancelSeat={this.cancelSeat}
 						seatsReserved={this.state.seatsReserved}
 						addSeatsReserved={this.seatsReservedHandler}
+            name={this.state.username}
+            mail={this.state.userMail}
 					/>
 				) : (
-					<Login users={this.state.users} login={this.loginHandler} setUser={this.currentUserHandler} />
+					<Login users={this.state.users} login={this.loginHandler} setUser={this.currentUserHandler} setName={this.userHandler} />
 				)}
 			</div>
 		);

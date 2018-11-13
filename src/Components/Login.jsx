@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col, FormControl, FormGroup, ControlLabel, Button } from 'react-bootstrap';
-import ModalBlocked from './ModalBlocked';
-import ModalDoesntExist from './ModalDoesntExist';
+import ModalBlocked from './LoginComponents/ModalBlocked';
+import ModalDoesntExist from './LoginComponents/ModalDoesntExist';
 import logo from '../Images/logo-login.PNG';
-import './login.css';
+import '../CSS/login.css';
 
 export default class Login extends Component {
 	constructor(props) {
@@ -40,8 +40,11 @@ export default class Login extends Component {
 		} else {
 			const currentLoginData = this.state.users[userIndex];
 			if (currentLoginData.pass === this.state.password) {
-				localStorage.removeItem('blocked');
-				this.props.setUser(this.state.account);
+        localStorage.removeItem('blocked');
+        const user = `${this.state.users[userIndex].fName} ${this.state.users[userIndex].sName} ${this.state.users[userIndex].fLast} ${this.state.users[userIndex].sLast}`;
+        const mail = this.state.users[userIndex].mail;
+        this.props.setUser(this.state.account);
+        this.props.setName(user, mail);
 				this.props.login();
 			} else {
 				let newAttempts = this.state.loginAttempts;

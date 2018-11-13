@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col, Jumbotron, Button } from 'react-bootstrap';
 import ModalTableSeats from './ModalTableSeats';
-import './TableSelection.css';
+import '../../CSS/TableSelection.css';
 export default class TableSelection extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			showSeatsModal: false,
-			currentTable: 0,
+      currentTable: 0,
+      seatsReserved: this.props.seatsReserved,
 			tables: this.props.tables,
 			user: this.props.user,
 			m1Free: true,
@@ -31,7 +32,9 @@ export default class TableSelection extends Component {
 			m19Free: true,
 			m20Free: true
 		};
-	}
+  }
+  
+  seatsReservedHandler = seats => this.setState({ seatsReserved: seats });
 
 	componentDidMount() {
 		let t1F = true;
@@ -152,8 +155,9 @@ export default class TableSelection extends Component {
 					tables={this.state.tables}
 					reserveSeat={this.props.reserveSeat}
 					cancelSeat={this.props.cancelSeat}
-					addSeatsReserved={this.props.addSeatsReserved}
+          addSeatsReserved={this.props.addSeatsReserved}
 				/>
+        {/* <Label id="lbl-title" bsStyle="danger">MODELO DEL SALON</Label> */}
 				<Grid>
 					<Row id="row0s">
 						<Col xs={6} xsOffset={3} sm={6} smOffset={3} md={6} mdOffset={3} lg={6} lgOffset={3}>
@@ -275,6 +279,10 @@ export default class TableSelection extends Component {
 						</Col>
 					</Row>
 				</Grid>
+        {/* <div>
+          <Label id="lbl-selected" bsStyle="danger">ASIENTOS RESERVADOS</Label>
+          {this.state.seatsReserved.map( seat => (<Label className="lbl-seat" bsStyle="default">{`ID:${seat.id} MESA:${seat.table} ASIENTO:${seat.seat}`}</Label>))}
+        </div> */}
 			</Jumbotron>
 		);
 	}

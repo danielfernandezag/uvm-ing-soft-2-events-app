@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button, Table } from 'react-bootstrap';
-import './ModalTableSeat.css';
+import '../../CSS/ModalTableSeat.css';
 
 export default class ModalTableSeats extends Component {
 	constructor(props) {
