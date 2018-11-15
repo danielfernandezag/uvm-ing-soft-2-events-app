@@ -28,7 +28,6 @@ export default class Login extends Component {
 		e.preventDefault();
 		this.setState({ interacted: false });
 		const userIndex = this.state.users.findIndex(user => user.account === this.state.account);
-		console.log(userIndex);
 		if (userIndex === -1 || userIndex === undefined) {
 			let newAttempts = this.state.loginAttempts;
 			newAttempts++;
@@ -43,8 +42,12 @@ export default class Login extends Component {
         localStorage.removeItem('blocked');
         const user = `${this.state.users[userIndex].fName} ${this.state.users[userIndex].sName} ${this.state.users[userIndex].fLast} ${this.state.users[userIndex].sLast}`;
         const mail = this.state.users[userIndex].mail;
+        const pay1 = this.state.users[userIndex].pay1;
+        const pay2 = this.state.users[userIndex].pay2;
+        const pay3 = this.state.users[userIndex].pay3;
+        const pay4 = this.state.users[userIndex].pay4;
         this.props.setUser(this.state.account);
-        this.props.setName(user, mail);
+        this.props.setName(user, mail, pay1, pay2, pay3, pay4);
 				this.props.login();
 			} else {
 				let newAttempts = this.state.loginAttempts;

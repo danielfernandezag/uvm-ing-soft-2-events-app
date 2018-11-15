@@ -31,7 +31,12 @@
   flex-wrap: wrap;
   justify-content: space-between;
 }
-@media screen and (min-width: 200px) and (max-width: 500px) {
+
+.btn-tab-sel {
+  width: 100%;
+} 
+
+@media screen and (min-width: 200px) and (max-width: 800px) {
   #radio-container {
     display: inline;
   }

@@ -16,24 +16,13 @@ export default class App extends Component {
 			.database()
 			.ref()
 			.child('TABLES');
-		this.PAYMENTS = this.app
-			.database()
-			.ref()
-			.child('PAYMENTS');
-		this.RESERVATION = this.app
-			.database()
-			.ref()
-			.child('RESERVATIONS');
 		this.state = {
 			users: [],
 			tables: [],
-			payments: [],
-			reservations: [],
 			currentUser: null,
 			isLogged: false,
-			seatsReserved: [],
-      username: '',
-      userMail: ''
+			username: '',
+			userMail: '',
 		};
 	}
 
@@ -50,27 +39,34 @@ export default class App extends Component {
 				sLast: snap.val().sLast,
 				pass: snap.val().pass,
 				mail: snap.val().mail,
-				account: snap.val().account
+				account: snap.val().account,
+				pay1: snap.val().pay1,
+				pay2: snap.val().pay2,
+				pay3: snap.val().pay3,
+				pay4: snap.val().pay4
 			});
 			this.setState({ users: users });
 		});
 		//USERS UPDATED
 		this.USERS.on('child_changed', snap => {
-			const users = this.state.users;
+      const users = this.state.users;
 			let newUser = snap.val();
-			newUser.id = snap.key;
-			const indexToUpdate = users.findIndex(user => user.id === snap.key);
+      newUser.id = snap.key;
+      const indexToUpdate = users.findIndex(user => user.id === snap.key);
 			users.splice(indexToUpdate, 1, newUser);
 			this.setState({ users: users });
-		});
+    });
+ 
 		//SEATS ADDED
 		this.TABLES.on('child_added', snap => {
 			const tables = this.state.tables;
 			tables.push({
 				id: snap.key,
-				status: snap.val().status,
-				table: snap.val().table,
 				seat: snap.val().seat,
+				table: snap.val().table,
+				free: snap.val().free,
+				reserved: snap.val().reserved,
+				paid: snap.val().paid,
 				account: snap.val().account
 			});
 			this.setState({ tables: tables });
@@ -84,29 +80,25 @@ export default class App extends Component {
 			tables.splice(indexToUpdate, 1, newSeat);
 			this.setState({ tables: tables });
 		});
-		//PAYMENTS ADDED
-		this.PAYMENTS.on('child_added', snap => {
-			const payments = this.state.payments;
-			payments.push({
-				id: snap.key,
-				account: snap.val().account,
-				amount: snap.val().amount,
-				date: snap.val().date,
-				debt: snap.val().debt,
-				prevDebt: snap.val().prevDebt
-			});
-			this.setState({ payments: payments });
-		});
-		//PAYMENTS UPDATED
-		this.PAYMENTS.on('child_changed', snap => {
-			const payments = this.state.payments;
-			let newPayment = snap.val();
-			newPayment.id = snap.key;
-			const indexToUpdate = payments.findIndex(payment => payment.id === snap.key);
-			payments.splice(indexToUpdate, 1, newPayment);
-			this.setState({ payments: payments });
-		});
 	}
+
+	paySeat = key => {
+		const tables = this.state.tables;
+		const currentSeat = tables.find(seat => seat.id === key);
+		const update = {};
+		update['/TABLES/' + key] = {
+			account: this.state.currentUser,
+			seat: currentSeat.seat,
+			table: currentSeat.table,
+			free: false,
+			reserved: false,
+			paid: true
+		};
+		this.app
+			.database()
+			.ref()
+			.update(update);
+	};
 
 	reserveSeat = key => {
 		const tables = this.state.tables;
@@ -116,13 +108,16 @@ export default class App extends Component {
 			account: this.state.currentUser,
 			seat: currentSeat.seat,
 			table: currentSeat.table,
-			status: false
+			free: false,
+			reserved: true,
+			paid: false
 		};
 		this.app
 			.database()
 			.ref()
 			.update(update);
 	};
+
 	cancelSeat = key => {
 		const tables = this.state.tables;
 		const currentSeat = tables.find(seat => seat.id === key);
@@ -131,38 +126,136 @@ export default class App extends Component {
 			account: '000000000',
 			seat: currentSeat.seat,
 			table: currentSeat.table,
-			status: true
+			free: true,
+			reserved: false,
+			paid: false
 		};
 		this.app
 			.database()
 			.ref()
 			.update(update);
 	};
-	loginHandler = () => this.setState({ isLogged: true });
-	logoutHandler = () => this.setState({ isLogged: false });
-	currentUserHandler = account => this.setState({ currentUser: account });
-	userHandler = (name, mail) => this.setState({ username: name, userMail: mail });
-	seatsReservedHandler = () => {
-		const tables = this.state.tables;
-		const reserved = tables.filter(seat => seat.account === this.state.currentUser);
-		this.setState({ seatsReserved: reserved });
+
+	firstPayment = () => {
+		const users = this.state.users;
+    const currentUser = users.find(user => user.account === this.state.currentUser);
+		const update = {};
+		update['/USERS/' + currentUser.id] = {
+			account: currentUser.account,
+			fName: currentUser.fName,
+			sName: currentUser.sName,
+			fLast: currentUser.fLast,
+			sLast: currentUser.sLast,
+			pass: currentUser.pass,
+			mail: currentUser.mail,
+			pay1: true,
+			pay2: false,
+			pay3: false,
+			pay4: false
+		};
+		this.app
+			.database()
+			.ref()
+			.update(update);
+  };
+  
+  secondPayment = () => {
+		const users = this.state.users;
+		const currentUser = users.find(user => user.account === this.state.currentUser);
+		const update = {};
+		update['/USERS/' + currentUser.id] = {
+			account: currentUser.account,
+			fName: currentUser.fName,
+			sName: currentUser.sName,
+			fLast: currentUser.fLast,
+			sLast: currentUser.sLast,
+			pass: currentUser.pass,
+			mail: currentUser.mail,
+			pay1: true,
+			pay2: true,
+			pay3: false,
+			pay4: false
+		};
+		this.app
+			.database()
+			.ref()
+			.update(update);
+  };
+  
+  thirdPayment = () => {
+		const users = this.state.users;
+		const currentUser = users.find(user => user.account === this.state.currentUser);
+		const update = {};
+		update['/USERS/' + currentUser.id] = {
+			account: currentUser.account,
+			fName: currentUser.fName,
+			sName: currentUser.sName,
+			fLast: currentUser.fLast,
+			sLast: currentUser.sLast,
+			pass: currentUser.pass,
+			mail: currentUser.mail,
+			pay1: true,
+			pay2: true,
+			pay3: true,
+			pay4: false
+		};
+		this.app
+			.database()
+			.ref()
+			.update(update);
+  };
+  
+  fourthPayment = () => {
+    const users = this.state.users;
+    const currentUser = users.find(user => user.account === this.state.currentUser);
+		const update = {};
+		update['/USERS/' + currentUser.id] = {
+			account: currentUser.account,
+			fName: currentUser.fName,
+			sName: currentUser.sName,
+			fLast: currentUser.fLast,
+			sLast: currentUser.sLast,
+			pass: currentUser.pass,
+			mail: currentUser.mail,
+			pay1: true,
+			pay2: true,
+			pay3: true,
+			pay4: true
+		};
+		this.app
+			.database()
+			.ref()
+			.update(update);
 	};
 
+	loginHandler = () => this.setState({ isLogged: true });
+	logoutHandler = () => this.setState({ isLogged: false });
+
+	currentUserHandler = account => this.setState({ currentUser: account });
+	userHandler = (name, mail, p1, p2, p3, p4) => this.setState({ username: name, userMail: mail, pay1: p1, pay2: p2, pay3: p3, pay4: p4 });
+
 	render() {
+    const index = this.state.users.findIndex( user => user.account === this.state.currentUser);
 		return (
 			<div className="App">
 				{this.state.isLogged ? (
 					<Graduations
 						logout={this.logoutHandler}
 						tables={this.state.tables}
-						payemnts={this.state.payments}
-						user={this.state.currentUser}
 						reserveSeat={this.reserveSeat}
 						cancelSeat={this.cancelSeat}
-						seatsReserved={this.state.seatsReserved}
-						addSeatsReserved={this.seatsReservedHandler}
-            name={this.state.username}
-            mail={this.state.userMail}
+						paySeat={this.paySeat}
+						user={this.state.currentUser}
+						name={this.state.username}
+						mail={this.state.userMail}
+						pay1={this.state.users[index].pay1}
+						pay2={this.state.users[index].pay2}
+						pay3={this.state.users[index].pay3}
+            pay4={this.state.users[index].pay4}
+            firstPayment={this.firstPayment}
+            secondPayment={this.secondPayment}
+            thirdPayment={this.thirdPayment}
+            fourthPayment={this.fourthPayment}
 					/>
 				) : (
 					<Login users={this.state.users} login={this.loginHandler} setUser={this.currentUserHandler} setName={this.userHandler} />

@@ -1,12 +1,28 @@
 .seat-free {
   background-color: rgb(183, 255, 168);
-  font-family: 'Muli', Tahoma, Geneva, Verdana, sans-serif !important;
+  color: rgb(36, 36, 36);
 }
 .seat-reserved {
-  background-color: rgb(247, 114, 114);
-  color: white;
-  font-family: 'Muli', Tahoma, Geneva, Verdana, sans-serif !important;
+  background-color: rgb(70, 88, 250);
+  color: rgb(36, 36, 36);
 }
+.seat-paid {
+  background-color: rgb(247, 114, 114);
+  color: rgb(36, 36, 36);
+}
+.seat-free:hover {
+  background-color: rgb(131, 182, 119);
+  background: rgb(131, 182, 119);
+}
+.seat-reserved:hover {
+  background-color: rgb(56, 71, 202);
+  background: rgb(56, 71, 202);
+}
+.seat-paid:hover {
+  background-color: rgb(192, 88, 88);
+  background: rgb(192, 88, 88);
+}
+
 .select-button {
   border-radius: 5px;
   border: solid 2px rgba(255, 255, 255, 0.9);
@@ -17,13 +33,5 @@
   border: solid 2px royalblue;
 }
 .cancel-button {
-  color: black;
-}
-.seat-free:hover {
-  background-color: rgb(131, 182, 119);
-  background: rgb(131, 182, 119);
-}
-.seat-reserved:hover {
-  background-color: rgb(192, 88, 88);
-  background: rgb(192, 88, 88);
+  color: rgb(36, 36, 36);
 }

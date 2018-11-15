@@ -24,6 +24,23 @@ export default class Checkout extends Component {
 	handelSubmit = e => {
 		e.preventDefault();
 		this.setState({ isLoading: true });
+		switch (this.props.payment) {
+			case 1:
+				this.props.firstPayment();
+				break;
+			case 2:
+				this.props.secondPayment();
+				break;
+			case 3:
+				this.props.thirdPayment();
+				break;
+			case 4:
+				this.props.fourthPayment();
+				break;
+			default:
+				console.log(this.props.payment);
+				break;
+		}
 		setTimeout(() => {
 			this.setState({ isLoading: false, percentage: 0 });
 		}, 3000);
@@ -36,47 +53,52 @@ export default class Checkout extends Component {
 					<Modal.Header closeButton>
 						<Modal.Title id="lbl-check-1">Ingresar Datos de Cobro</Modal.Title>
 					</Modal.Header>
-					<Modal.Body>
-						<form onSubmit={this.handelSubmit}>
-							<h4 className="lbl-check">{`Cuenta: ${this.props.user}`}</h4>
-							<h4 className="lbl-check">{`Alumno: ${this.props.name}`}</h4>
-							<h4 className="lbl-check">{`Monto a pagar: $ ${this.props.quantity} MXN`}</h4>
-							<h4 className="lbl-check">{`Correo de facturación: ${this.props.mail}`}</h4>
-							<div className="icons-container">
-								<div className="icon-1">
-									<FontAwesomeIcon id="icon1" icon={Brands.faCcAmex} />
+					{this.props.option === "1" ? (
+						<Modal.Body>
+							<form onSubmit={this.handelSubmit}>
+								<h4 className="lbl-check">{`Pago: ${this.props.payment}`}</h4>
+								<h4 className="lbl-check">{`Cuenta: ${this.props.user}`}</h4>
+								<h4 className="lbl-check">{`Alumno: ${this.props.name}`}</h4>
+								<h4 className="lbl-check">{`Monto a pagar: $ ${this.props.quantity} MXN`}</h4>
+								<h4 className="lbl-check">{`Correo de facturación: ${this.props.mail}`}</h4>
+								<div className="icons-container">
+									<div className="icon-1">
+										<FontAwesomeIcon id="icon1" icon={Brands.faCcAmex} />
+									</div>
+									<div className="icon-2">
+										<FontAwesomeIcon id="icon2" icon={Brands.faCcMastercard} />
+									</div>
+									<div className="icon-3">
+										<FontAwesomeIcon id="icon3" icon={Brands.faCcVisa} />
+									</div>
 								</div>
-								<div className="icon-2">
-									<FontAwesomeIcon id="icon2" icon={Brands.faCcMastercard} />
+								<FormGroup>
+									<FormControl type="number" value={this.state.card} placeholder="tarjeta..." onChange={this.handleCardChange} required />
+								</FormGroup>
+								<div className="code-container">
+									<div className="icon-date">
+										<FormGroup>
+											<FormControl id="date" type="text" value={this.state.date} placeholder="MM/YY" onChange={this.handleDateChange} required />
+										</FormGroup>
+									</div>
+									<div className="icon-code">
+										<FormGroup>
+											<FormControl id="code" type="number" value={this.state.code} placeholder="CVC" onChange={this.handleCodeChange} required />
+										</FormGroup>
+									</div>
 								</div>
-								<div className="icon-3">
-									<FontAwesomeIcon id="icon3" icon={Brands.faCcVisa} />
-								</div>
-							</div>
-							<FormGroup controlId="frmCard">
-								<FormControl type="number" value={this.state.card} placeholder="tarjeta..." onChange={this.handleCardChange} required/>
-							</FormGroup>
-							<div className="code-container">
-								<div className="icon-date">
-									<FormGroup controlId="frmDate">
-										<FormControl id="date" type="text" value={this.state.date} placeholder="MM/YY" onChange={this.handleDateChange} required/>
-									</FormGroup>
-								</div>
-								<div className="icon-code">
-									<FormGroup controlId="frmCode">
-										<FormControl id="code" type="number" value={this.state.code} placeholder="CVC" onChange={this.handleCodeChange} required/>
-									</FormGroup>
-								</div>
-							</div>
-							{!this.state.isLoading ? (
-								<Button id="btn-submit" type="submit" bsStyle="danger">
-									Pagar
-								</Button>
-							) : (
-								<ProgressBar active bsStyle="info" now={this.state.percentage} />
-							)}
-						</form>
-					</Modal.Body>
+								{!this.state.isLoading ? (
+									<Button id="btn-submit" type="submit" bsStyle="danger">
+										Pagar
+									</Button>
+								) : (
+									<ProgressBar active bsStyle="info" now={this.state.percentage} />
+								)}
+							</form>
+						</Modal.Body>
+					) : (
+						<Modal.Body>deposito</Modal.Body>
+					)}
 					<Modal.Footer>
 						{!this.state.isLoading && (
 							<Button bsStyle="danger" id="btn-close" onClick={this.props.hide}>
