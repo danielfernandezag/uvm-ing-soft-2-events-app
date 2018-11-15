@@ -11,8 +11,6 @@ export default class TableSelection extends Component {
 			seatsReserved: this.props.seatsReserved,
 			tables: this.props.tables,
 			user: this.props.user,
-			enabled: false,
-			enabledPaid: false,
 			m1Free: true,
 			m2Free: true,
 			m3Free: true,
@@ -79,26 +77,49 @@ export default class TableSelection extends Component {
 		const table18 = this.props.tables.filter(table => table.table === '18');
 		const table19 = this.props.tables.filter(table => table.table === '19');
 		const table20 = this.props.tables.filter(table => table.table === '20');
-		table1.forEach(seat => (seat.free === true ? (t1F = true) : (t1F = false)));
-		table2.forEach(seat => (seat.free === true ? (t2F = true) : (t2F = false)));
-		table3.forEach(seat => (seat.free === true ? (t3F = true) : (t3F = false)));
-		table4.forEach(seat => (seat.free === true ? (t4F = true) : (t4F = false)));
-		table5.forEach(seat => (seat.free === true ? (t5F = true) : (t5F = false)));
-		table6.forEach(seat => (seat.free === true ? (t6F = true) : (t6F = false)));
-		table7.forEach(seat => (seat.free === true ? (t7F = true) : (t7F = false)));
-		table8.forEach(seat => (seat.free === true ? (t8F = true) : (t8F = false)));
-		table9.forEach(seat => (seat.free === true ? (t9F = true) : (t9F = false)));
-		table10.forEach(seat => (seat.free === true ? (t10F = true) : (t10F = false)));
-		table11.forEach(seat => (seat.free === true ? (t11F = true) : (t11F = false)));
-		table12.forEach(seat => (seat.free === true ? (t12F = true) : (t12F = false)));
-		table13.forEach(seat => (seat.free === true ? (t13F = true) : (t13F = false)));
-		table14.forEach(seat => (seat.free === true ? (t14F = true) : (t14F = false)));
-		table15.forEach(seat => (seat.free === true ? (t15F = true) : (t15F = false)));
-		table16.forEach(seat => (seat.free === true ? (t16F = true) : (t16F = false)));
-		table17.forEach(seat => (seat.free === true ? (t17F = true) : (t17F = false)));
-		table18.forEach(seat => (seat.free === true ? (t18F = true) : (t18F = false)));
-		table19.forEach(seat => (seat.free === true ? (t19F = true) : (t19F = false)));
-		table20.forEach(seat => (seat.free === true ? (t20F = true) : (t20F = false)));
+
+		const table1Taken = table1.filter(table => table.account !== '000000000');
+		const table2Taken = table2.filter(table => table.account !== '000000000');
+		const table3Taken = table3.filter(table => table.account !== '000000000');
+		const table4Taken = table4.filter(table => table.account !== '000000000');
+		const table5Taken = table5.filter(table => table.account !== '000000000');
+		const table6Taken = table6.filter(table => table.account !== '000000000');
+		const table7Taken = table7.filter(table => table.account !== '000000000');
+		const table8Taken = table8.filter(table => table.account !== '000000000');
+		const table9Taken = table9.filter(table => table.account !== '000000000');
+		const table10Taken = table10.filter(table => table.account !== '000000000');
+		const table11Taken = table11.filter(table => table.account !== '000000000');
+		const table12Taken = table12.filter(table => table.account !== '000000000');
+		const table13Taken = table13.filter(table => table.account !== '000000000');
+		const table14Taken = table14.filter(table => table.account !== '000000000');
+		const table15Taken = table15.filter(table => table.account !== '000000000');
+		const table16Taken = table16.filter(table => table.account !== '000000000');
+		const table17Taken = table17.filter(table => table.account !== '000000000');
+		const table18Taken = table18.filter(table => table.account !== '000000000');
+		const table19Taken = table19.filter(table => table.account !== '000000000');
+		const table20Taken = table20.filter(table => table.account !== '000000000');
+
+		table1Taken.length === table1.length ? (t1F = false) : (t1F = true);
+		table2Taken.length === table2.length ? (t2F = false) : (t2F = true);
+		table3Taken.length === table3.length ? (t3F = false) : (t3F = true);
+		table4Taken.length === table4.length ? (t4F = false) : (t4F = true);
+		table5Taken.length === table5.length ? (t5F = false) : (t5F = true);
+		table6Taken.length === table6.length ? (t6F = false) : (t6F = true);
+		table7Taken.length === table7.length ? (t7F = false) : (t7F = true);
+		table8Taken.length === table8.length ? (t8F = false) : (t8F = true);
+		table9Taken.length === table9.length ? (t9F = false) : (t9F = true);
+		table10Taken.length === table10.length ? (t10F = false) : (t10F = true);
+		table11Taken.length === table11.length ? (t11F = false) : (t11F = true);
+		table12Taken.length === table12.length ? (t12F = false) : (t12F = true);
+		table13Taken.length === table13.length ? (t13F = false) : (t13F = true);
+		table14Taken.length === table14.length ? (t14F = false) : (t14F = true);
+		table15Taken.length === table15.length ? (t15F = false) : (t15F = true);
+		table16Taken.length === table16.length ? (t16F = false) : (t16F = true);
+		table17Taken.length === table17.length ? (t17F = false) : (t17F = true);
+		table18Taken.length === table18.length ? (t18F = false) : (t18F = true);
+		table19Taken.length === table19.length ? (t19F = false) : (t19F = true);
+		table20Taken.length === table20.length ? (t20F = false) : (t20F = true);
+
 		this.setState({
 			m1Free: t1F,
 			m2Free: t2F,
@@ -121,12 +142,6 @@ export default class TableSelection extends Component {
 			m19Free: t19F,
 			m20Free: t20F
 		});
-		if (this.props.pay1 && this.props.pay2) {
-			this.setState({ enabled: true });
-		}
-		if (this.props.pay1 && this.props.pay2 && this.props.pay3 && this.props.pay4) {
-			this.setState({ enabledPaid: true });
-		}
 	}
 
 	callModal1 = () => this.setState({ showSeatsModal: true, currentTable: 1 });
@@ -155,7 +170,7 @@ export default class TableSelection extends Component {
 	render() {
 		return (
 			<Jumbotron id="TableSelectionContainer">
-				{this.state.enabledPaid ? (
+				{this.props.paid ? (
 					<ModalTableSeats
 						show={this.state.showSeatsModal}
 						hide={this.closeModal}
@@ -179,12 +194,12 @@ export default class TableSelection extends Component {
 					/>
 				)}
 
-				{!this.state.enabled && (
+				{!this.props.enabled && (
 					<Label id="lbl-title" bsStyle="danger">
 						AUN NO HAS PAGADO EL 50% DE LA RESERVACION
 					</Label>
 				)}
-				{!this.state.enabled ? (
+				{!this.props.enabled ? (
 					<Grid>
 						<Row id="row0s">
 							<Col xs={6} xsOffset={3} sm={6} smOffset={3} md={6} mdOffset={3} lg={6} lgOffset={3}>

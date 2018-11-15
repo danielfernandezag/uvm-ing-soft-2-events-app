@@ -20,11 +20,7 @@ export default class Payments extends Component {
 			width: window.screen.width,
 			option: 0,
 			showPayment: false,
-      enable: true,
-      pay1: this.props.pay1,
-			pay2: this.props.pay2,
-			pay3: this.props.pay3,
-			pay4: this.props.pay4
+			enable: true
 		};
 	}
 
@@ -58,16 +54,33 @@ export default class Payments extends Component {
 		}
 	};
 
+	currentPayment = () => {
+		let payment = 0;
+		if (this.props.pay1 === false) {
+			payment = 1;
+		}
+		if (this.props.pay2 === false && this.props.pay1 === true) {
+			payment = 2;
+		}
+		if (this.props.pay3 === false && this.props.pay2 === true) {
+			payment = 3;
+		}
+		if (this.props.pay4 === false && this.props.pay3 === true) {
+			payment = 4;
+		}
+		return payment;
+	};
+
 	render() {
-		window.addEventListener('resize', () => this.setState({ width: window.screen.width }));
 		const client = {
 			sandbox: 'UVM',
 			production: 'ID'
 		};
+		const payment = this.currentPayment();
 		return (
 			<Jumbotron id="PaymentsContainer">
 				<Label id="label-username" bsStyle="danger">
-					{this.state.width < 500 ? `ESTADO: ${this.state.paid ? 'PAGADO' : 'POR PAGAR'}` : `${this.props.user} ${this.props.name} ESTADO: ${this.state.paid ? 'PAGADO' : 'POR PAGAR'}`}
+					{`ESTADO: ${this.props.pay1 === true && this.props.pay2 === true && this.props.pay3 === true && this.props.pay4 === true ? 'PAGADO' : 'POR PAGAR'}`}
 				</Label>
 				<div className="table-container">
 					<Table striped bordered condensed hover>
@@ -94,7 +107,6 @@ export default class Payments extends Component {
 								<th>Pago</th>
 								<th>Estado</th>
 								<th>Cantidad</th>
-								{/* <th>Accion</th> */}
 							</tr>
 						</thead>
 						<tbody>
@@ -102,73 +114,29 @@ export default class Payments extends Component {
 								<td>1er Pago</td>
 								<td>{this.props.pay1 ? 'PAGADO' : 'PENDIENTE'}</td>
 								<td>$ 250.00 MXN</td>
-								{/* <td>
-									{!this.state.pay1 ? (
-										<Button className="btn-tab-sel" onClick={() => this.handleCurrentPayment(1)} bsStyle="primary">
-											SELECCIONAR
-										</Button>
-									) : (
-										<Button className="btn-tab-sel" disabled>
-											SELECCIONAR
-										</Button>
-									)}
-								</td> */}
 							</tr>
 							<tr>
 								<td>2do Pago</td>
 								<td>{this.props.pay2 ? 'PAGADO' : 'PENDIENTE'}</td>
 								<td>$ 250.00 MXN</td>
-								{/* <td>
-									{!this.state.pay2 && this.state.pay1 ? (
-										<Button className="btn-tab-sel" onClick={() => this.handleCurrentPayment(2)} bsStyle="primary">
-											SELECCIONAR
-										</Button>
-									) : (
-										<Button className="btn-tab-sel" disabled>
-											SELECCIONAR
-										</Button>
-									)}
-								</td> */}
 							</tr>
 							<tr>
 								<td>3er Pago</td>
 								<td>{this.props.pay3 ? 'PAGADO' : 'PENDIENTE'}</td>
 								<td>$ 250.00 MXN</td>
-								{/* <td>
-									{!this.state.pay3 && this.state.pay2  && this.state.pay1? (
-										<Button className="btn-tab-sel" onClick={() => this.handleCurrentPayment(3)} bsStyle="primary">
-											SELECCIONAR
-										</Button>
-									) : ( 
-										<Button className="btn-tab-sel" disabled>
-											SELECCIONAR
-										</Button>
-									)}
-								</td> */}
 							</tr>
 							<tr>
 								<td>4to Pago</td>
 								<td>{this.props.pay4 ? 'PAGADO' : 'PENDIENTE'}</td>
 								<td>$ 250.00 MXN</td>
-								{/* <td>
-									{!this.state.pay4 && this.state.pay3 && this.state.pay2 && this.state.pay1 ? (
-										<Button className="btn-tab-sel" onClick={() => this.handleCurrentPayment(4)} bsStyle="primary">
-											SELECCIONAR
-										</Button>
-									) : (
-										<Button className="btn-tab-sel" disabled>
-											SELECCIONAR
-										</Button>
-									)}
-								</td> */}
 							</tr>
 						</tbody>
 					</Table>
 				</div>
-				{this.state.enable && (
+				{!(this.props.pay1 === true && this.props.pay2 === true && this.props.pay3 === true && this.props.pay4 === true) && (
 					<React.Fragment>
 						<Label id="label-form" bsStyle="danger">
-							PAGAR: {this.state.currentPayment === 1 ? '1ER PAGO' : `${this.state.currentPayment === 2 ? '2DO PAGO' : `${this.state.currentPayment === 3 ? '3ER PAGO' : '4TO PAGO'}`}`}
+							PAGO {payment}
 						</Label>
 						<Checkout
 							show={this.state.showPayment}
@@ -176,12 +144,9 @@ export default class Payments extends Component {
 							firstPayment={this.props.firstPayment}
 							secondPayment={this.props.secondPayment}
 							thirdPayment={this.props.thirdPayment}
-							fourthPayment={this.props.fourthPayment}
-              payment={this.props.pay4 ? 4 : this.props.pay3 ? 3 : this.props.pay2 ? 2 : 1 }
-              pay2={this.props.pay2}
-              pay3={this.props.pay3}
-              pay4={this.props.pay4}
-              option={this.state.option}
+              fourthPayment={this.props.fourthPayment}
+              payment={payment}
+							option={this.state.option}
 							user={this.props.user}
 							name={this.props.name}
 							mail={this.props.mail}

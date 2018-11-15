@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Button, FormGroup, FormControl, ProgressBar } from 'react-bootstrap';
+import { Modal, Button, FormGroup, FormControl, ProgressBar, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Brands from '@fortawesome/free-brands-svg-icons';
 import '../../CSS/Checkout.css';
@@ -8,14 +8,19 @@ export default class Checkout extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			card: '',
-			mail: '',
-			date: '',
-			code: '',
 			isLoading: false,
 			percentage: 0
 		};
+		this.progress = 0;
+		this.counter = null;
 	}
+
+	startTimer = () => {
+		this.counter = setInterval(() => {
+			this.progress += 10;
+			this.setState({ percentage: this.progress });
+		}, 1000);
+	};
 
 	handleCardChange = e => this.setState({ card: e.target.value });
 	handleMailChange = e => this.setState({ mail: e.target.value });
@@ -23,6 +28,7 @@ export default class Checkout extends Component {
 	handleCodeChange = e => this.setState({ code: e.target.value });
 	handelSubmit = e => {
 		e.preventDefault();
+		this.startTimer();
 		this.setState({ isLoading: true });
 		switch (this.props.payment) {
 			case 1:
@@ -43,7 +49,10 @@ export default class Checkout extends Component {
 		}
 		setTimeout(() => {
 			this.setState({ isLoading: false, percentage: 0 });
-		}, 3000);
+			this.progress = 0;
+			clearInterval(this.counter);
+			this.props.hide();
+		}, 11000);
 	};
 
 	render() {
@@ -51,9 +60,9 @@ export default class Checkout extends Component {
 			<div>
 				<Modal show={this.props.show} onHide={this.props.hide}>
 					<Modal.Header closeButton>
-						<Modal.Title id="lbl-check-1">Ingresar Datos de Cobro</Modal.Title>
+						<Modal.Title id="lbl-check-1">{this.props.option === '1' ? 'Ingresar Datos de Cobro' : 'Datos para realizar un deposito'}</Modal.Title>
 					</Modal.Header>
-					{this.props.option === "1" ? (
+					{this.props.option === '1' ? (
 						<Modal.Body>
 							<form onSubmit={this.handelSubmit}>
 								<h4 className="lbl-check">{`Pago: ${this.props.payment}`}</h4>
@@ -97,12 +106,39 @@ export default class Checkout extends Component {
 							</form>
 						</Modal.Body>
 					) : (
-						<Modal.Body>deposito</Modal.Body>
+						<Modal.Body>
+							<div className="container-transfer">
+								<Table responsive>
+									<tbody>
+										<tr>
+											<td className="trans-title">Beneficiario</td>
+											<td className="trans-data">Univerdidad del Valle de Mexico Campus San Rafael</td>
+										</tr>
+										<tr>
+											<td className="trans-title">Banco</td>
+											<td className="trans-data">Banamex</td>
+										</tr>
+										<tr>
+											<td className="trans-title">Cuenta</td>
+											<td className="trans-data">0443010597</td>
+										</tr>
+										<tr>
+											<td className="trans-title">ABB</td>
+											<td className="trans-data">BCMRMXMMPYM</td>
+										</tr>
+										<tr>
+											<td className="trans-title">Concepto</td>
+											<td className="trans-data">Graduacion 2014-2018</td>
+										</tr>
+									</tbody>
+								</Table>
+							</div>
+						</Modal.Body>
 					)}
 					<Modal.Footer>
 						{!this.state.isLoading && (
 							<Button bsStyle="danger" id="btn-close" onClick={this.props.hide}>
-								Cancelar
+								Cerrar
 							</Button>
 						)}
 					</Modal.Footer>

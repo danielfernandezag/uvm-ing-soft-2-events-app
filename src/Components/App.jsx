@@ -22,7 +22,7 @@ export default class App extends Component {
 			currentUser: null,
 			isLogged: false,
 			username: '',
-			userMail: '',
+			userMail: ''
 		};
 	}
 
@@ -49,14 +49,14 @@ export default class App extends Component {
 		});
 		//USERS UPDATED
 		this.USERS.on('child_changed', snap => {
-      const users = this.state.users;
+			const users = this.state.users;
 			let newUser = snap.val();
-      newUser.id = snap.key;
-      const indexToUpdate = users.findIndex(user => user.id === snap.key);
+			newUser.id = snap.key;
+			const indexToUpdate = users.findIndex(user => user.id === snap.key);
 			users.splice(indexToUpdate, 1, newUser);
 			this.setState({ users: users });
-    });
- 
+		});
+
 		//SEATS ADDED
 		this.TABLES.on('child_added', snap => {
 			const tables = this.state.tables;
@@ -138,7 +138,7 @@ export default class App extends Component {
 
 	firstPayment = () => {
 		const users = this.state.users;
-    const currentUser = users.find(user => user.account === this.state.currentUser);
+		const currentUser = users.find(user => user.account === this.state.currentUser);
 		const update = {};
 		update['/USERS/' + currentUser.id] = {
 			account: currentUser.account,
@@ -157,9 +157,9 @@ export default class App extends Component {
 			.database()
 			.ref()
 			.update(update);
-  };
-  
-  secondPayment = () => {
+	};
+
+	secondPayment = () => {
 		const users = this.state.users;
 		const currentUser = users.find(user => user.account === this.state.currentUser);
 		const update = {};
@@ -180,9 +180,9 @@ export default class App extends Component {
 			.database()
 			.ref()
 			.update(update);
-  };
-  
-  thirdPayment = () => {
+	};
+
+	thirdPayment = () => {
 		const users = this.state.users;
 		const currentUser = users.find(user => user.account === this.state.currentUser);
 		const update = {};
@@ -203,11 +203,11 @@ export default class App extends Component {
 			.database()
 			.ref()
 			.update(update);
-  };
-  
-  fourthPayment = () => {
-    const users = this.state.users;
-    const currentUser = users.find(user => user.account === this.state.currentUser);
+	};
+
+	fourthPayment = () => {
+		const users = this.state.users;
+		const currentUser = users.find(user => user.account === this.state.currentUser);
 		const update = {};
 		update['/USERS/' + currentUser.id] = {
 			account: currentUser.account,
@@ -227,7 +227,11 @@ export default class App extends Component {
 			.ref()
 			.update(update);
 	};
-
+	// fourthPayment = () => {
+	// 	var sleepTime = new Date().getTime() + 12000;
+	// 	while (new Date().getTime() <= sleepTime) {}
+	// 	this.fourthPaymentReal();
+	// };
 	loginHandler = () => this.setState({ isLogged: true });
 	logoutHandler = () => this.setState({ isLogged: false });
 
@@ -235,7 +239,7 @@ export default class App extends Component {
 	userHandler = (name, mail, p1, p2, p3, p4) => this.setState({ username: name, userMail: mail, pay1: p1, pay2: p2, pay3: p3, pay4: p4 });
 
 	render() {
-    const index = this.state.users.findIndex( user => user.account === this.state.currentUser);
+		const index = this.state.users.findIndex(user => user.account === this.state.currentUser);
 		return (
 			<div className="App">
 				{this.state.isLogged ? (
@@ -251,11 +255,11 @@ export default class App extends Component {
 						pay1={this.state.users[index].pay1}
 						pay2={this.state.users[index].pay2}
 						pay3={this.state.users[index].pay3}
-            pay4={this.state.users[index].pay4}
-            firstPayment={this.firstPayment}
-            secondPayment={this.secondPayment}
-            thirdPayment={this.thirdPayment}
-            fourthPayment={this.fourthPayment}
+						pay4={this.state.users[index].pay4}
+						firstPayment={this.firstPayment}
+						secondPayment={this.secondPayment}
+						thirdPayment={this.thirdPayment}
+						fourthPayment={this.fourthPayment}
 					/>
 				) : (
 					<Login users={this.state.users} login={this.loginHandler} setUser={this.currentUserHandler} setName={this.userHandler} />

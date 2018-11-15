@@ -69,13 +69,9 @@ export default class Graduations extends Component {
 						tables={this.state.tables}
 						reserveSeat={this.props.reserveSeat}
 						paySeat={this.props.paySeat}
-						cancelSeat={this.props.cancelSeat}
-						pay1={this.props.pay1}
-						pay2={this.props.pay2}
-						pay3={this.props.pay3}
-						pay4={this.props.pay4}
-						// seatsReserved={this.state.seatsReserved}
-						// addSeatsReserved={this.addSeatsReserved}
+            cancelSeat={this.props.cancelSeat}
+            enabled={this.props.pay1 && this.props.pay2}
+            paid={this.props.pay1 && this.props.pay2 && this.props.pay3 && this.props.pay4}
 					/>
 				)}
 				{this.state.showReservation && (
@@ -84,9 +80,10 @@ export default class Graduations extends Component {
 						pay1={this.props.pay1}
 						pay2={this.props.pay2}
 						pay3={this.props.pay3}
-						pay4={this.props.pay4}
-						name={this.state.userName}
-						seats={this.props.seatsReserved}
+            pay4={this.props.pay4}
+            name={this.state.userName}
+            mail={this.state.mail}
+            tables={this.props.tables}
 					/>
 				)}
 				<Footer />
